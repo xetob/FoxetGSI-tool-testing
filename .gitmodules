@@ -1,0 +1,3 @@
+[submodule "tools/ROM_resigner"]
+	path = tools/ROM_resigner
+	url = https://github.com/FoxetGSI/ROM_resigner.git
