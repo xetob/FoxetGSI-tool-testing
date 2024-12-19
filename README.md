@@ -1,5 +1,5 @@
 ## Requirements
-    Linux or MacI  
+    Linux or Mac
 
 ## How to use
 
