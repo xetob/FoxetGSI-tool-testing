@@ -158,13 +158,17 @@ $romsdir/$sourcever/$romtype/$romtypename/debloat.sh "$systemdir/system" 2>/dev/
 if [[ ! -e $romsdir/$sourcever/$romtype/$romtypename/DONTRESIGN ]]; then
     if [[ ! -e $romsdir/$sourcever/$romtype/DONTRESIGN ]]; then
         echo "Resigning to AOSP keys"
-        ispython2=`python -c 'import sys; print("%i" % (sys.hexversion<0x03000000))'`
-            python2=python
+        if command -v python &> /dev/null; then
+            python_cmd=python
+        else
+            echo "Python не установлен. Завершение работы."
+            exit 1
         fi
-        $python2 $toolsdir/ROM_resigner/resign.py "$systemdir/system" $toolsdir/ROM_resigner/AOSP_security > $tempdir/resign.log
+        $python_cmd $toolsdir/ROM_resigner/resign.py "$systemdir/system" $toolsdir/ROM_resigner/AOSP_security > $tempdir/resign.log
         $prebuiltdir/resigned/make.sh "$systemdir/system" 2>/dev/null
     fi
 fi
+
 
 # Start patching
 echo "Patching started..."
