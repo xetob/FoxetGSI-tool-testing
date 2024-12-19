@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 #
 # Copyright (C) 2018 The Android Open Source Project
 #
@@ -31,8 +31,10 @@ def RunCommand(cmd, env):
   env_copy = os.environ.copy()
   env_copy.update(env)
   cmd[0] = FindProgram(cmd[0])
+  logging.info("Env: %s", env)
+  logging.info("Running: " + " ".join(cmd))
   p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT,
-                       env=env_copy)
+                       env=env_copy, text=True)
   output, _ = p.communicate()
   return output, p.returncode
 def FindProgram(prog_name):
@@ -101,6 +103,11 @@ def ParseArguments(argv):
   # The current argparse doesn't handle intermixed arguments well. Checks
   # manually whether the file_contexts exists as the last argument.
   # TODO(xunchang) use parse_intermixed_args() when we switch to python 3.7.
+  if len(remainder) == 1 and remainder[0] == argv[-1]:
+    args.file_contexts = remainder[0]
+  elif remainder:
+    parser.print_usage()
+    sys.exit(1)
   return args
 def ConstructE2fsCommands(args):
   """Builds the mke2fs & e2fsdroid command based on the input arguments.
@@ -135,11 +142,11 @@ def ConstructE2fsCommands(args):
     e2fsdroid_opts += ["-S", args.file_contexts]
   if args.flash_erase_block_size:
     mke2fs_extended_opts.append("stripe_width={}".format(
-        int(args.flash_erase_block_size) / BLOCKSIZE))
+        int(args.flash_erase_block_size) // BLOCKSIZE))
   if args.flash_logical_block_size:
     # stride should be the max of 8kb and the logical block size
     stride = max(int(args.flash_logical_block_size), 8192)
-    mke2fs_extended_opts.append("stride={}".format(stride / BLOCKSIZE))
+    mke2fs_extended_opts.append("stride={}".format(stride // BLOCKSIZE))
   if args.mke2fs_hash_seed:
     mke2fs_extended_opts.append("hash_seed=" + args.mke2fs_hash_seed)
   if args.journal_size:
@@ -156,21 +163,24 @@ def ConstructE2fsCommands(args):
   if args.mount_point:
     mke2fs_opts += ["-M", args.mount_point]
   if args.reserved_percent:
-    mke2fs_opts += ["-m", "0"]
+    mke2fs_opts += ["-m", args.reserved_percent]
   if args.mke2fs_uuid:
     mke2fs_opts += ["-U", args.mke2fs_uuid]
   if mke2fs_extended_opts:
     mke2fs_opts += ["-E", ','.join(mke2fs_extended_opts)]
   # Round down the filesystem length to be a multiple of the block size
-  blocks = int(args.fs_size) / BLOCKSIZE
-  mke2fs_cmd = ([os.uname()[0] + "/bin/mke2fs"] + mke2fs_opts +
+  blocks = int(args.fs_size) // BLOCKSIZE
+  mke2fs_cmd = (["mke2fs"] + mke2fs_opts +
                 ["-t", args.ext_variant, "-b", str(BLOCKSIZE), args.output_file,
                  str(blocks)])
-  e2fsdroid_cmd = ([os.uname()[0] + "/bin/e2fsdroid"] + e2fsdroid_opts +
+  e2fsdroid_cmd = (["e2fsdroid"] + e2fsdroid_opts +
                    ["-f", args.src_dir, "-a", args.mount_point,
                     args.output_file])
   return mke2fs_cmd, e2fsdroid_cmd
 def main(argv):
+  logging_format = '%(asctime)s %(filename)s %(levelname)s: %(message)s'
+  logging.basicConfig(level=logging.INFO, format=logging_format,
+                      datefmt='%H:%M:%S')
   args = ParseArguments(argv)
   if not os.path.isdir(args.src_dir):
     logging.error("Can not find directory %s", args.src_dir)
@@ -178,6 +188,8 @@ def main(argv):
   if not args.mount_point:
     logging.error("Mount point is required")
     sys.exit(2)
+  if args.mount_point[0] != '/':
+    args.mount_point = '/' + args.mount_point
   if not args.fs_size:
     logging.error("Size of the filesystem is required")
     sys.exit(2)
@@ -196,7 +208,7 @@ def main(argv):
     output, ret = RunCommand(mke2fs_cmd, mke2fs_env)
     print(output)
     if ret != 0:
-      logging.error(output)
+      logging.error("Failed to run mke2fs: " + output)
       sys.exit(4)
   # run e2fsdroid
   e2fsdroid_env = {}
@@ -207,7 +219,7 @@ def main(argv):
   # unchanged for now.
   print(output)
   if ret != 0:
-    logging.error(output)
+    logging.error("Failed to run e2fsdroid_cmd: " + output)
     os.remove(args.output_file)
     sys.exit(4)
 if __name__ == '__main__':
