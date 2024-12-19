@@ -1,3 +1,28 @@
+# Русский
+
+## Требования
+    Linux or Mac
+
+## Как использовать
+
+### Скачать программу
+```
+git clone --recurse-submodules https://github.com/FoxetGSI/FoxetGSI-tool.git
+cd FoxetGSI-tool
+```
+
+### Для настройки требований
+    bash setup.sh
+
+### Генерация GSI из URL-адреса стоковой прошивки
+Пример: для создания прошивки OxygenOS для oneplus 7 pro вы можете использовать эту команду
+```
+./url2GSI.sh https://oxygenos.oneplus.net/OnePlus7ProOxygen_21.O.07_OTA_007_all_1905120542_fc480574576b4843.zip OxygenOS
+```
+проверьте url2GSI.sh для получения дополнительной информации.
+
+# English
+
 ## Requirements
     Linux or Mac
 
