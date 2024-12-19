@@ -1,3 +1,6 @@
 [submodule "tools/ROM_resigner"]
 	path = tools/ROM_resigner
 	url = https://github.com/FoxetGSI/ROM_resigner.git
+[submodule "prebuilt/vendor_vndk"]
+	path = prebuilt/vendor_vndk
+	url = https://github.com/FoxetGSI/vendor_vndk.git
