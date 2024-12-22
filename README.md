@@ -3,6 +3,9 @@
 ## Requirements
     Linux or Mac
 
+## Ready-made gsi images: https://t.me/FoxetGSI
+or github mirror: https://github.com/FoxetGSI/FoxetGSI-release
+
 ## How to use
 
 ### Download tools
@@ -26,6 +29,9 @@ check url2GSI.sh for more info
 
 ## Требования
     Linux or Mac
+    
+## Готовые гси : https://t.me/FoxetGSI
+или зеркало на github : https://github.com/FoxetGSI/FoxetGSI-release
 
 ## Как использовать
 
