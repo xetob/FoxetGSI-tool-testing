@@ -1,10 +1,10 @@
+Ready-made gsi images: https://t.me/FoxetGSI
+or github mirror: https://github.com/FoxetGSI/FoxetGSI-release
+
 # English
 
 ## Requirements
     Linux or Mac
-
-Ready-made gsi images: https://t.me/FoxetGSI
-or github mirror: https://github.com/FoxetGSI/FoxetGSI-release
 
 ## How to use
 
