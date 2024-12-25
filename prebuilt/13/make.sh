@@ -80,3 +80,27 @@ echo "debug.sf.high_fps_early_phase_offset_ns=" >> $1/product/etc/build.prop
 echo "debug.sf.high_fps_early_gl_phase_offset_ns=" >> $1/product/etc/build.prop
 echo "debug.sf.high_fps_early_app_phase_offset_ns=" >> $1/product/etc/build.prop
 echo "debug.sf.high_fps_early_gl_app_phase_offset_ns=" >> $1/product/etc/build.prop
+
+# Disable for everyone for the moment
+echo "ro.sys.sdcardfs=0" >> $1/build.prop
+
+# Fix developer settings
+echo "ro.oem_unlock_supported=1" >> $1/build.prop
+
+# You can nuke this if necessary
+echo "ro.opengles.version=196610" >> $1/build.prop
+echo "telephony.lteOnCdmaDevice=1" >> $1/build.prop
+echo "ro.product.property_source_order=system,product,system_ext,vendor,odm" >> $1/build.prop
+
+# Force ADB
+echo "persist.sys.usb.config=adb,mtp" >> $1/build.prop
+echo "ro.adb.secure=0" >> $1/build.prop
+echo "ro.secure=0" >> $1/build.prop
+echo "ro.debuggable=1" >> $1/build.prop
+
+echo "ro.control_privapp_permissions=disable" >> $1/build.prop
+echo "ro.control_privapp_permissions=disable" >> $1/product/etc/build.prop
+echo "ro.control_privapp_permissions=disable" >> $1/system_ext/etc/build.prop
+echo "persist.sys.disable_rescue=true" >> $1/build.prop
+echo "persist.sys.disable_rescue=true" >> $1/product/etc/build.prop
+echo "persist.sys.disable_rescue=true" >> $1/system_ext/etc/build.prop
