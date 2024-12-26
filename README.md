@@ -1,5 +1,4 @@
-Ready-made gsi images: https://t.me/FoxetGSI
-or github mirror: https://github.com/FoxetGSI/FoxetGSI-release
+Ready-made gsi images: https://github.com/FoxetGSI/FoxetGSI-release
 
 # English
 
@@ -30,8 +29,7 @@ check url2GSI.sh for more info
 ## Требования
     Linux or Mac
     
-## Готовые гси : https://t.me/FoxetGSI
-или зеркало на github : https://github.com/FoxetGSI/FoxetGSI-release
+## Готовые гси : https://github.com/FoxetGSI/FoxetGSI-release
 
 ## Как использовать
 
