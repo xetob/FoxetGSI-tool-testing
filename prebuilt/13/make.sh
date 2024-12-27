@@ -152,3 +152,6 @@ echo "bluetooth.profile.pan.panu.enabled?=true" >> $1/build.prop
 echo "bluetooth.profile.pbap.server.enabled?=true" >> $1/build.prop
 echo "bluetooth.profile.sap.server.enabled?=true" >> $1/build.prop
 
+echo "ro.setupwizard.mode=OPTIONAL" >> $1/build.prop
+echo "ro.setupwizard.mode=OPTIONAL" >> $1/product/build.prop
+echo "ro.setupwizard.mode=OPTIONAL" >> $1/system_ext/build.prop

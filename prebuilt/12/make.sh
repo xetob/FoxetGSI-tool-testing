@@ -104,3 +104,51 @@ echo "ro.control_privapp_permissions=disable" >> $1/system_ext/etc/build.prop
 echo "persist.sys.disable_rescue=true" >> $1/build.prop
 echo "persist.sys.disable_rescue=true" >> $1/product/etc/build.prop
 echo "persist.sys.disable_rescue=true" >> $1/system_ext/etc/build.prop
+
+echo "# SIM Fix" >> $1/build.prop
+echo "ro.multisim.simslotcount=2" >> $1/build.prop
+echo "ro.vendor.multisim.simslotcount=2" >> $1/build.prop
+echo "persist.radio.multisim.config=dsds" >> $1/build.prop
+echo "persist.vendor.radio.msimode=dsds" >> $1/build.prop
+
+echo "# Samsung vendors default to a Samsung-specific gadget for MTP. Set this to use AOSP's functionfs MTP" >> $1/build.prop
+echo "vendor.usb.use_ffs_mtp=1" >> $1/build.prop
+
+echo "#Fixes fingerprint unlock delay" >> $1/build.prop
+echo "persist.wm.enable_remote_keyguard_animation=0" >> $1/build.prop
+
+echo "# Enable support of one-handed mode" >> $1/build.prop
+echo "ro.support_one_handed_mode=true" >> $1/build.prop
+
+echo "# Set the Bluetooth Class of Device" >> $1/build.prop
+echo "# Service Field: 0x5A -> 90" >> $1/build.prop
+echo "#    Bit 17: Networking" >> $1/build.prop
+echo "#    Bit 19: Capturing" >> $1/build.prop
+echo "#    Bit 20: Object Transfer" >> $1/build.prop
+echo "#    Bit 22: Telephony" >> $1/build.prop
+echo "# MAJOR_CLASS: 0x02 -> 2 (Phone)" >> $1/build.prop
+echo "# MINOR_CLASS: 0x0C -> 12 (Smart Phone)" >> $1/build.prop
+echo "bluetooth.device.class_of_device=90,2,12" >> $1/build.prop
+
+echo "# Enable system-side generic bluetooth audio HAL" >> $1/build.prop
+echo "persist.bluetooth.system_audio_hal.enabled=true" >> $1/build.prop
+echo "# Set commonly-supported Bluetooth profiles to enabled" >> $1/build.prop
+echo "# TODO: Enable BLE Audio profiles on newer vendors" >> $1/build.prop
+echo "bluetooth.profile.asha.central.enabled?=true" >> $1/build.prop
+echo "bluetooth.profile.a2dp.source.enabled?=true" >> $1/build.prop
+echo "bluetooth.profile.avrcp.target.enabled?=true" >> $1/build.prop
+echo "bluetooth.profile.bas.client.enabled?=true" >> $1/build.prop
+echo "bluetooth.profile.gatt.enabled?=true" >> $1/build.prop
+echo "bluetooth.profile.hfp.ag.enabled?=true" >> $1/build.prop
+echo "bluetooth.profile.hid.device.enabled?=true" >> $1/build.prop
+echo "bluetooth.profile.hid.host.enabled?=true" >> $1/build.prop
+echo "bluetooth.profile.map.server.enabled?=true" >> $1/build.prop
+echo "bluetooth.profile.opp.enabled?=true" >> $1/build.prop
+echo "bluetooth.profile.pan.nap.enabled?=true" >> $1/build.prop
+echo "bluetooth.profile.pan.panu.enabled?=true" >> $1/build.prop
+echo "bluetooth.profile.pbap.server.enabled?=true" >> $1/build.prop
+echo "bluetooth.profile.sap.server.enabled?=true" >> $1/build.prop
+
+echo "ro.setupwizard.mode=OPTIONAL" >> $1/build.prop
+echo "ro.setupwizard.mode=OPTIONAL" >> $1/product/build.prop
+echo "ro.setupwizard.mode=OPTIONAL" >> $1/system_ext/build.prop
