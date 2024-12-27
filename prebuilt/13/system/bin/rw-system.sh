@@ -160,7 +160,6 @@ changeKeylayout() {
 
     if getprop ro.vendor.build.fingerprint | grep -iq \
         -e poco/ -e POCO/ -e redmi/ -e xiaomi/ ; then
-        setprop persist.sys.phh.evgrab 'uinput-egis;uinput-goodix;uinput-fpc'
         if [ ! -f /mnt/phh/keylayout/uinput-goodix.kl ]; then
           cp /system/phh/empty /mnt/phh/keylayout/uinput-goodix.kl
           chmod 0644 /mnt/phh/keylayout/uinput-goodix.kl
@@ -785,21 +784,6 @@ if [ -f /system/phh/secure ] || [ -f /metadata/phh/secure ];then
     resetprop_phh ro.build.selinux 0
 
     resetprop_phh ro.adb.secure 1
-
-    # Hide system/xbin/su
-    mount /mnt/phh/empty_dir /system/xbin
-    mount /mnt/phh/empty_dir /system/app/me.phh.superuser
-    mount /system/phh/empty /system/xbin/phh-su
-else
-    mkdir /mnt/phh/xbin
-    chmod 0755 /mnt/phh/xbin
-    chcon u:object_r:system_file:s0 /mnt/phh/xbin
-
-    #phh-su will bind over this empty file to make a real su
-    touch /mnt/phh/xbin/su
-    chcon u:object_r:system_file:s0 /mnt/phh/xbin/su
-
-    mount -o bind /mnt/phh/xbin /system/xbin
 fi
 
 for abi in "" 64;do
@@ -1016,6 +1000,8 @@ fi
 
 if [ "$board" = lahaina ]; then
 	setprop ro.netflix.bsp_rev Q875-32774-1
+	resetprop_phh ro.config.media_vol_steps 25
+	resetprop_phh ro.config.media_vol_default 15
 fi
 
 if [ "$board" = universal8825 ];then
@@ -1137,4 +1123,200 @@ setprop debug.phh.props.omposer-service vendor
 # The support of that command inherits from a "le vendor version". Force this at 0 to disable the use of that command
 if getprop ro.vendor.gnsschip |grep -q marlin3lite;then
     setprop persist.sys.bt.max_vendor_cap 0
+fi
+
+mount -o bind /mnt/phh/empty_dir /vendor/app/qti-logkit
+mount -o bind /mnt/phh/empty_dir /vendor/app/qti-logkit-lite
+mount -o bind /system/mystic/vo /vendor/overlay || true
+mount -o bind /mnt/phh/empty /vendor/apex || true
+mount -o bind /system/mystic/group /vendor/etc/group || true
+mount -o bind /system/mystic/passwd /vendor/etc/passwd || true
+mount -o bind /system/lib/vndk-"$vndk"/libgui.so /vendor/lib/libgui_vendor.so || true
+mount -o bind /system/lib64/vndk-"$vndk"/libgui.so /vendor/lib64/libgui_vendor.so || true
+
+mount -o bind /system/lib/vndk-"$vndk"/libbinder.so /vendor/lib/libbinder.so || true
+mount -o bind /system/lib64/vndk-"$vndk"/libbinder.so /vendor/lib64/libbinder.so || true
+
+mount -o bind /system/lib/vndk-"$vndk"/libbinder.so /vendor/lib/vndk/libbinder.so || true
+mount -o bind /system/lib64/vndk-"$vndk"/libbinder.so /vendor/lib64/vndk/libbinder.so || true
+
+mount -o bind /system/lib/vndk-sp-"$vndk"/libcutils.so /vendor/lib/libcutils.so || true
+mount -o bind /system/lib64/vndk-sp-"$vndk"/libcutils.so /vendor/lib64/libcutils.so || true
+
+mount -o bind /system/lib/vndk-sp-"$vndk"/libcutils.so /vendor/lib/vndk-sp/libcutils.so || true
+mount -o bind /system/lib64/vndk-sp-"$vndk"/libcutils.so /vendor/lib64/vndk-sp/libcutils.so || true
+
+mount -o bind /system/lib/libpdx_default_transport.so /vendor/lib/libpdx_default_transport.so || true
+mount -o bind /system/lib64/libpdx_default_transport.so /vendor/lib64/libpdx_default_transport.so || true
+
+mount -o bind /system/lib/libpdx_default_transport.so /vendor/lib/vndk/libpdx_default_transport.so || true
+mount -o bind /system/lib64/libpdx_default_transport.so /vendor/lib64/vndk/libpdx_default_transport.so || true
+
+# drop qcom stuffs for non qcom devices
+if ! getprop ro.hardware | grep -qiE -e qcom -e mata;then
+    mount -o bind /mnt/phh/empty_dir /system/app/imssettings || true
+    mount -o bind /mnt/phh/empty_dir /system/priv-app/ims || true
+    mount -o bind /mnt/phh/empty_dir /system/app/ims || true
+    mount -o bind /mnt/phh/empty_dir /system/app/QtiTelephonyService || true
+    mount -o bind /mnt/phh/empty_dir /system/app/datastatusnotification || true
+fi
+
+vendor_overlays=$(ls /vendor/overlay)
+
+for overlay in $vendor_overlays; do
+    if [[ ! $overlay == *"utout"* ]] && [[ ! $overlay == *"DarkTheme"* ]] && [[ ! $overlay == *"framework"* ]]; then
+        if [ -f "/vendor/overlay/$overlay" ]; then
+            mount -o bind /system/phh/empty "/vendor/overlay/$overlay" || true
+        fi
+        if [ -d "/vendor/overlay/$overlay" ]; then
+             mount -o bind /mnt/phh/empty_dir "/vendor/overlay/$overlay" || true
+        fi
+    fi
+done
+
+if getprop ro.vendor.build.fingerprint | grep -qiE '^samsung/' ;then
+    mount -o bind /mnt/phh/empty_dir "/vendor/overlay" || true
+fi
+
+# Fix no Earpiece in audio_policy
+for f in \
+    /odm/etc/audio_policy_configuration.xml \
+    /vendor/etc/audio_policy_configuration.xml; do
+    [ ! -f "$f" ] && continue
+    if ! grep -q "<item>Earpiece</item>" "$f"; then
+        # shellcheck disable=SC2010
+        ctxt="$(ls -lZ "$f" | grep -oE 'u:object_r:[^:]*:s0')"
+        b="$(echo "$f" | tr / _)"
+        cp -a "$f" "/mnt/phh/$b"
+        sed -i "s|<attachedDevices>|<attachedDevices><item>Earpiece</item>|g" "/mnt/phh/$b"
+        chcon "$ctxt" "/mnt/phh/$b"
+        mount -o bind "/mnt/phh/$b" "$f"
+    fi
+done
+
+# Drop aosp light from manifest if service not avaliable
+if [ "$vndk" -lt 29 ]; then
+if [ ! -f /vendor/bin/hw/android.hardware.light* ]; then
+    for f in \
+        /vendor/etc/vintf/manifest.xml \
+        /vendor/manifest.xml; do # For O if i ever wanted to try
+        [ ! -f "$f" ] && continue
+        if grep -q "android.hardware.light" "$f"; then
+            # shellcheck disable=SC2010
+            ctxt="$(ls -lZ "$f" | grep -oE 'u:object_r:[^:]*:s0')"
+            b="$(echo "$f" | tr / _)"
+            cp -a "$f" "/mnt/phh/$b"
+            sed -i "s|android.hardware.light|android.hardware.NOPElight|g" "/mnt/phh/$b"
+            chcon "$ctxt" "/mnt/phh/$b"
+            mount -o bind "/mnt/phh/$b" "$f"
+        fi
+    done
+fi
+fi
+
+frp_node="$(getprop ro.frp.pst)"
+chown -h system.system $frp_node
+chmod 0660 $frp_node
+
+# Drop samsung overlays
+if getprop ro.vendor.build.fingerprint | grep -qiE '^samsung'; then
+    mount -o bind /system/phh/empty /vendor/overlay
+fi
+
+mount -o bind /mnt/phh/empty_dir /vendor/app/qti-logkit
+mount -o bind /mnt/phh/empty_dir /vendor/app/qti-logkit-lite
+mount -o bind /system/mystic/vo /vendor/overlay || true
+mount -o bind /mnt/phh/empty /vendor/apex || true
+mount -o bind /system/mystic/group /vendor/etc/group || true
+mount -o bind /system/mystic/passwd /vendor/etc/passwd || true
+mount -o bind /system/lib/vndk-"$vndk"/libgui.so /vendor/lib/libgui_vendor.so || true
+mount -o bind /system/lib64/vndk-"$vndk"/libgui.so /vendor/lib64/libgui_vendor.so || true
+
+mount -o bind /system/lib/vndk-"$vndk"/libbinder.so /vendor/lib/libbinder.so || true
+mount -o bind /system/lib64/vndk-"$vndk"/libbinder.so /vendor/lib64/libbinder.so || true
+
+mount -o bind /system/lib/vndk-"$vndk"/libbinder.so /vendor/lib/vndk/libbinder.so || true
+mount -o bind /system/lib64/vndk-"$vndk"/libbinder.so /vendor/lib64/vndk/libbinder.so || true
+
+mount -o bind /system/lib/vndk-sp-"$vndk"/libcutils.so /vendor/lib/libcutils.so || true
+mount -o bind /system/lib64/vndk-sp-"$vndk"/libcutils.so /vendor/lib64/libcutils.so || true
+
+mount -o bind /system/lib/vndk-sp-"$vndk"/libcutils.so /vendor/lib/vndk-sp/libcutils.so || true
+mount -o bind /system/lib64/vndk-sp-"$vndk"/libcutils.so /vendor/lib64/vndk-sp/libcutils.so || true
+
+mount -o bind /system/lib/libpdx_default_transport.so /vendor/lib/libpdx_default_transport.so || true
+mount -o bind /system/lib64/libpdx_default_transport.so /vendor/lib64/libpdx_default_transport.so || true
+
+mount -o bind /system/lib/libpdx_default_transport.so /vendor/lib/vndk/libpdx_default_transport.so || true
+mount -o bind /system/lib64/libpdx_default_transport.so /vendor/lib64/vndk/libpdx_default_transport.so || true
+
+# drop qcom stuffs for non qcom devices
+if ! getprop ro.hardware | grep -qiE -e qcom -e mata;then
+    mount -o bind /mnt/phh/empty_dir /system/app/imssettings || true
+    mount -o bind /mnt/phh/empty_dir /system/priv-app/ims || true
+    mount -o bind /mnt/phh/empty_dir /system/app/ims || true
+    mount -o bind /mnt/phh/empty_dir /system/app/QtiTelephonyService || true
+    mount -o bind /mnt/phh/empty_dir /system/app/datastatusnotification || true
+fi
+
+vendor_overlays=$(ls /vendor/overlay)
+
+for overlay in $vendor_overlays; do
+    if [[ ! $overlay == *"utout"* ]] && [[ ! $overlay == *"DarkTheme"* ]] && [[ ! $overlay == *"framework"* ]]; then
+        if [ -f "/vendor/overlay/$overlay" ]; then
+            mount -o bind /system/phh/empty "/vendor/overlay/$overlay" || true
+        fi
+        if [ -d "/vendor/overlay/$overlay" ]; then
+             mount -o bind /mnt/phh/empty_dir "/vendor/overlay/$overlay" || true
+        fi
+    fi
+done
+
+if getprop ro.vendor.build.fingerprint | grep -qiE '^samsung/' ;then
+    mount -o bind /mnt/phh/empty_dir "/vendor/overlay" || true
+fi
+
+# Fix no Earpiece in audio_policy
+for f in \
+    /odm/etc/audio_policy_configuration.xml \
+    /vendor/etc/audio_policy_configuration.xml; do
+    [ ! -f "$f" ] && continue
+    if ! grep -q "<item>Earpiece</item>" "$f"; then
+        # shellcheck disable=SC2010
+        ctxt="$(ls -lZ "$f" | grep -oE 'u:object_r:[^:]*:s0')"
+        b="$(echo "$f" | tr / _)"
+        cp -a "$f" "/mnt/phh/$b"
+        sed -i "s|<attachedDevices>|<attachedDevices><item>Earpiece</item>|g" "/mnt/phh/$b"
+        chcon "$ctxt" "/mnt/phh/$b"
+        mount -o bind "/mnt/phh/$b" "$f"
+    fi
+done
+
+# Drop aosp light from manifest if service not avaliable
+if [ "$vndk" -lt 29 ]; then
+if [ ! -f /vendor/bin/hw/android.hardware.light* ]; then
+    for f in \
+        /vendor/etc/vintf/manifest.xml \
+        /vendor/manifest.xml; do # For O if i ever wanted to try
+        [ ! -f "$f" ] && continue
+        if grep -q "android.hardware.light" "$f"; then
+            # shellcheck disable=SC2010
+            ctxt="$(ls -lZ "$f" | grep -oE 'u:object_r:[^:]*:s0')"
+            b="$(echo "$f" | tr / _)"
+            cp -a "$f" "/mnt/phh/$b"
+            sed -i "s|android.hardware.light|android.hardware.NOPElight|g" "/mnt/phh/$b"
+            chcon "$ctxt" "/mnt/phh/$b"
+            mount -o bind "/mnt/phh/$b" "$f"
+        fi
+    done
+fi
+fi
+
+frp_node="$(getprop ro.frp.pst)"
+chown -h system.system $frp_node
+chmod 0660 $frp_node
+
+# Drop samsung overlays
+if getprop ro.vendor.build.fingerprint | grep -qiE '^samsung'; then
+    mount -o bind /system/phh/empty /vendor/overlay
 fi
