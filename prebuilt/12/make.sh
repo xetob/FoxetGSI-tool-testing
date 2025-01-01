@@ -47,25 +47,10 @@ sed -i "/typetransition location_app/d" $1/etc/selinux/plat_sepolicy.cil
 # Drop reboot_on_failure of init.rc
 sed -i "/reboot_on_failure/d" $1/etc/init/hw/init.rc
 
-# GSI always generate dex pre-opt in system image
-echo "ro.cp_system_other_odex=0" >> $1/product/etc/build.prop
-
-# GSI disables non-AOSP nnapi extensions on product partition
-echo "ro.nnapi.extensions.deny_on_product=true" >> $1/product/etc/build.prop
-
-# TODO(b/136212765): the default for LMK
-echo "ro.lmk.kill_heaviest_task=true" >> $1/product/etc/build.prop
-echo "ro.lmk.kill_timeout_ms=100" >> $1/product/etc/build.prop
-echo "ro.lmk.use_minfree_levels=true" >> $1/product/etc/build.prop
-
 #sudo sed -i "s|/dev/uinput               0660   uhid       uhid|/dev/uinput               0660   system     bluetooth|" $1/etc/ueventd.rc
 
 # Disable bpfloader
 rm -rf $1/etc/init/bpfloader.rc
-echo "bpf.progs_loaded=1" >> $1/product/etc/build.prop
-
-# Don't write binary XML files
-echo "persist.sys.binary_xml=false" >> $1/build.prop
 
 # product-prop patches
 echo "ro.apex.updatable=true" >> $1/product/etc/build.prop
