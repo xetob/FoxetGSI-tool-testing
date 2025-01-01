@@ -37,7 +37,6 @@ rm -rf $1/etc/init/recovery-refresh.rc
 rm -rf $1/etc/init/update_verifier.rc
 rm -rf $1/etc/init/cppreopts.rc
 rm -rf $1/etc/init/otapreopt.rc
-rm -rf $1/etc/init/bpfloader.rc
 rm -rf $1/etc/selinux/mapping/27.0.compat.cil
 rm -rf $1/etc/selinux/mapping/30.0.compat.cil
 rm -rf $1/etc/selinux/mapping/26.0.compat.cil
