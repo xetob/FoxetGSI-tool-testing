@@ -250,5 +250,15 @@ if [ "$sourcever" == "9" ]; then
 fi
 $scriptsdir/mkimage.sh $systemdir $outputtype $systemsize $output $useold > $tempdir/mkimage.log
 
-echo "Remove Temp dir"
-rm -rf "$tempdir"
+echo "Remove Temp dir? (y or n)"
+read answer
+
+if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
+    rm -rf "$tempdir"
+    echo "Temp dir removed."
+elif [[ "$answer" == "n" || "$answer" == "N" ]]; then
+    echo "Exiting without removing temp dir."
+    exit 0
+else
+    echo "Invalid input. Please enter 'y' or 'n'."
+fi
