@@ -1,5 +1,4 @@
 ro.build.system_root_image=true
-ro.support_one_handed_mode=true
 persist.sys.fflag.override.settings_provider_model=false
 persist.sys.fflag.override.settings_network_and_internet_v2=true
 persist.sys.binary_xml=false
