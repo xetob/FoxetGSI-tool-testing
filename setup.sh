@@ -12,5 +12,5 @@ if [[ "$OSTYPE" == "linux-gnu" ]]; then
     fi
     pip install backports.lzma pycrypto --break-system-packages
     pip install tqdm --break-system-packages
-    pip install protobuf>=5.27.3 six>=1.16.0 bsdiff4>=1.1.5 brotli>=1.1.0 zstandard>=0.23.0 --break-system-packages
+    pip install protobuf==5.27.3 six==1.16.0 bsdiff4==1.1.5 brotli==1.1.0 zstandard==0.23.0 --break-system-packages
 fi
