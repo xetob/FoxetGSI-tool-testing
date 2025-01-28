@@ -1,7 +1,5 @@
 #!/bin/bash
 
-# Project OEM-GSI Porter by Erfan Abdi <erfangplus@gmail.com>
-
 usage()
 {
 echo "Usage: $0 <Path to Firmware partitions> <Firmware type> <Output type> [Output Dir]"
