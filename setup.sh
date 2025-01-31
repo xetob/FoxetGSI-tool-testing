@@ -1,13 +1,6 @@
 #!/bin/bash
+# Debian-based
 
-if [[ "$OSTYPE" == "linux-gnu" ]]; then
-    distro=$(awk -F= '$1 == "ID" {print $2}' /etc/os-release)
-    id_like=$(awk -F= '$1 == "ID_LIKE" {print $2}' /etc/os-release)
-    if [[ "$distro" == "arch" || "$id_like" == "arch" ]]; then
-       echo "Arch Linux Detected"
-       sudo pacman -S unace unrar zip unzip p7zip sharutils uudeview arj cabextract file-roller dtc python3 python-pip brotli lz4 gawk aria2 jre-openjdk -y
-       #aur=rar
-    else
        sudo apt install unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract file-roller device-tree-compiler liblzma-dev python3-pip python-is-python3 brotli liblz4-tool gawk aria2 default-jre -y
     fi
     pip install --upgrade pip > /dev/null 2>&1 
