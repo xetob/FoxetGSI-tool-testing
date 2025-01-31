@@ -10,5 +10,6 @@ if [[ -d "$TOOLS_DIR/Firmware_extractor" ]]; then
     git -C "$TOOLS_DIR"/Firmware_extractor fetch origin
     git -C "$TOOLS_DIR"/Firmware_extractor reset --hard origin/master
 else
+    echo Installing Firmware_extractor 
     git clone -q https://github.com/FoxetGSI/Firmware_extractor.git "$TOOLS_DIR"/Firmware_extractor
 fi
