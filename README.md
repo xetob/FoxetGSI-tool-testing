@@ -3,9 +3,14 @@ Ready-made gsi images: https://github.com/FoxetGSI/FoxetGSI-release
 # English
 
 ## Requirements
-    Linux or Mac
+    Linux Ubuntu/Forks 20.04+
 
 ## How to use
+
+### Cd into root
+```
+sudo -i
+```
 
 ### Download tools
 ```
