@@ -16,6 +16,7 @@ sudo apt install unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudevi
 install_with_fallback "backports.lzma"
 install_with_fallback "PyCryptodome"
 install_with_fallback "tqdm"
+install_with_fallback "testresources"
 install_with_fallback "protobuf==5.27.3"
 install_with_fallback "six==1.16.0"
 install_with_fallback "bsdiff4==1.1.5"
