@@ -4,11 +4,6 @@ systempath=$1
 romdir=$2
 thispath=`cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd`
 
-# Deal with non-flattened apex
-#$thispath/../../scripts/apex_extractor.sh $1/apex
-#$thispath/../../scripts/apex_extractor.sh $1/system_ext/apex
-echo "ro.apex.updatable=true" >> $1/product/etc/build.prop
-
 # Copy system files
 rsync -ra $thispath/system/ $systempath
 
