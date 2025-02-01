@@ -131,9 +131,6 @@ case "$sourcever" in
     *"11"*) flag=true ;;
     *"12"*) flag=true ;;
     *"13"*) flag=true ;;
-    *"14"*) flag=true ;;
-    *"15"*) flag=true ;;
-    *"16"*) flag=true ;;
 esac
 if [ "$flag" == "false" ]; then
     echo "$sourcever is not supported"
@@ -163,7 +160,7 @@ if [[ ! -e $romsdir/$sourcever/$romtype/$romtypename/DONTRESIGN ]]; then
         if command -v python &> /dev/null; then
             python_cmd=python
         else
-            echo "Python не установлен. Завершение работы."
+            echo "ERROR:Python is not installed"
             exit 1
         fi
         $python_cmd $toolsdir/ROM_resigner/resign.py "$systemdir/system" $toolsdir/ROM_resigner/AOSP_security > $tempdir/resign.log
@@ -253,15 +250,6 @@ if [ "$sourcever" == "9" ]; then
 fi
 $scriptsdir/mkimage.sh $systemdir $outputtype $systemsize $output $useold > $tempdir/mkimage.log
 
-echo "Remove Temp dir? (y or n)"
-read answer
+rm -rf "$tempdir"
+echo "Temp dir removed."
 
-if [[ "$answer" == "y" || "$answer" == "Y" ]]; then
-    rm -rf "$tempdir"
-    echo "Temp dir removed."
-elif [[ "$answer" == "n" || "$answer" == "N" ]]; then
-    echo "Exiting without removing temp dir."
-    exit 0
-else
-    echo "Invalid input. Please enter 'y' or 'n'."
-fi
