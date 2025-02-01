@@ -2,7 +2,7 @@
 
 install_with_fallback() {
     package_name=$1
-    pip3 install $package_name --break-system-packages 2>/dev/null
+    pip3 install $package_name
     if [ $? -ne 0 ]; then
         echo "Error installing $package_name without --break-system-packages. Attempting to install with the flag."
         pip3 install $package_name --break-system-packages
