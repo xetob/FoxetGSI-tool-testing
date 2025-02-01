@@ -1,6 +1,6 @@
 #!/bin/bash
 # Debian-based
-       sudo apt update && sudo apt upgrade -y
+       sudo apt update
        sudo apt install unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract file-roller device-tree-compiler liblzma-dev python3-pip python-is-python3 brotli liblz4-tool gawk aria2 default-jre -y
     pip3 install --upgrade pip > /dev/null 2>&1 
     pip3 install --upgrade pip --break-system-packages > /dev/null 2>&1
