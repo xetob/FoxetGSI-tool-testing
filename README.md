@@ -22,3 +22,12 @@ Example: for making OxygenOS of oneplus 7 pro firmware, you can use this command
 sudo bash url2GSI.sh https://oxygenos.oneplus.net/OnePlus7ProOxygen_21.O.07_OTA_007_all_1905120542_fc480574576b4843.zip OxygenOS
 ```
 check url2GSI.sh for more info
+
+### Status
+a9: Work ✅
+a10: Work ✅
+a11: Critical (fastboot mode) ❌
+a12: Bootanimation ⚠️
+a13: Critical (fastboot mode) ❌
+a14: No ❌
+a15: No ❌
