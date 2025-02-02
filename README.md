@@ -25,9 +25,15 @@ check url2GSI.sh for more info
 
 ### Status
 a9: Work ✅
+
 a10: Work ✅
+
 a11: Critical (fastboot mode) ❌
+
 a12: Bootanimation ⚠️
+
 a13: Critical (fastboot mode) ❌
+
 a14: No ❌
+
 a15: No ❌
