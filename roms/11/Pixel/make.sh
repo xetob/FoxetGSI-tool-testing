@@ -16,3 +16,12 @@ echo "qemu.hw.mainkeys=0" >> $1/etc/prop.default
 
 sed -i "/dataservice_app/d" $1/product/etc/selinux/product_seapp_contexts
 sed -i "/dataservice_app/d" $1/system_ext/etc/selinux/system_ext_seapp_contexts
+
+# Rewmove recovery and update pixel files selinux and other patch
+rm -rf $1/bin/update_engine
+rm -rf $1/bin/update_verifier
+rm -rf $1/etc/init/recovery-refresh.rc
+rm -rf $1/etc/init/update_verifier.rc
+rm -rf $1/etc/init/cppreopts.rc
+rm -rf $1/etc/init/otapreopt.rc
+rm -rf $1/product/etc/security/avb/system_other.avbpubkey
