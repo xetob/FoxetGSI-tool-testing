@@ -30,7 +30,7 @@ a10: Work ✅
 
 a11: Critical (fastboot mode) ❌
 
-a12: Bootanimation ⚠️
+a12: Work ✅
 
 a13: Critical (fastboot mode) ❌
 
