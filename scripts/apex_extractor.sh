@@ -20,7 +20,7 @@ for APEX in $APEXES; do
     fi
     mkdir -p "$APEXDIR/$APEXNAME"
     7z e -y "$APEXDIR/$APEX" apex_pubkey -o"$APEXDIR/$APEXNAME" 2>/dev/null >> "$TMPDIR"/zip.log
-    python3 $APEXEXTRACT --debugfs_path /usr/sbin/debugfs --fsckerofs_path /usr/bin/fsck.erofs extract "$APEXDIR/$APEXNAME.apex" "$APEXDIR/$APEXNAME"
+    python3 $APEXEXTRACT --debugfs_path "$(which debugfs)" --fsckerofs_path "$(which fsck.erofs)" extract "$APEXDIR/$APEXNAME.apex" "$APEXDIR/$APEXNAME"
     rm "$APEXDIR/$APEXNAME.apex"
 done
 
