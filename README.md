@@ -28,7 +28,7 @@ a9: Work ✅
 
 a10: Work ✅
 
-a11: Critical (fastboot mode) ❌
+a11: Work ✅
 
 a12: Work ✅
 
