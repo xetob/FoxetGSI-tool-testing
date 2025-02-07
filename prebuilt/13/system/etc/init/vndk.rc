@@ -1,4 +1,3 @@
-
 on post-fs
 	exec - root -- /system/bin/vndk-detect
 	exec - root -- /system/bin/rw-system.sh
