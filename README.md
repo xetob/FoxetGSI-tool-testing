@@ -32,8 +32,8 @@ a11: Work ✅
 
 a12: Work ✅
 
-a13: Critical (fastboot mode) ❌
+a13: Not tested yet ❌
 
-a14: No ❌
+a14: Not tested yet ❌
 
-a15: No ❌
+a15: Not tested yet ❌
