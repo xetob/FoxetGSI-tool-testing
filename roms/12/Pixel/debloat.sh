@@ -1,4 +1,3 @@
-
 #!/bin/bash
 
 systempath=$1
