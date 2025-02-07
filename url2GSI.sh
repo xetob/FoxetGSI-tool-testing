@@ -150,11 +150,6 @@ fi
 
 echo "Porting ${SRCTYPENAME} GSI done on: $PROJECT_DIR/output"
 
-if [[ -f "$PROJECT_DIR/private_utils.sh" ]]; then
-    . "$PROJECT_DIR/private_utils.sh"
-    UPLOAD "$PROJECT_DIR/output" ${SRCTYPENAME} ${AB} ${AONLY} "${ORIGINAL_URL}"
-fi
-
 DEBUG=false
 if [ $DEBUG == true ]; then
 echo "AONLY = ${AONLY}"
