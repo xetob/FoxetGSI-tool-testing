@@ -12,6 +12,12 @@ rm -rf $1/priv-app/CNEService
 rm -rf $1/priv-app/DMService
 rm -rf $1/priv-app/VzwOmaTrigger
 rm -rf $1/etc/permissions/com.google.android.camera.experimental2017.xml
+rm -rf $1/product/app/Calculator*
+rm -rf $1/product/app/arcore*
+rm -rf $1/product/app/Chrome*
+rm -rf $1/product/app/Tycho
+rm -rf $1/product/app/GoogleContacts
+rm -rf $1/product/app/LocationHistoryPrebuilt
 rm -rf $1/product/app/YouTube
 rm -rf $1/product/app/YouTubeMusicPrebuilt
 rm -rf $1/product/app/PrebuiltGmail
