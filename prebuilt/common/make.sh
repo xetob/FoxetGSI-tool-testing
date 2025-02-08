@@ -91,7 +91,3 @@ if grep -q post_process_props $1/product/etc/build.prop; then
     $thispath/../../scripts/propcleannerS.sh $1/product/etc/build.prop > $1/../../build.prop
     cp -fpr $1/../../build.prop $1/product/etc/
 fi
-
-
-## Append to phh script
-cat $thispath/rw-system.add.sh >> $1/bin/rw-system.sh
