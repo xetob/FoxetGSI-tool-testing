@@ -10,6 +10,8 @@ rsync -ra $thispath/system/ $systempath
 # Remove libdolphin.so
 rm -rf $1/lib64/libdolphin.so
 # Drop caf permissions
+rm -rf $1/etc/permissions/qti_permissions.xml
+rm -rf $1/etc/permissions/com.qti.dpmframework.xml
 rm -rf $1/system_ext/etc/permissions/qti_permissions.xml
 rm -rf $1/system_ext/etc/permissions/com.qti.dpmframework.xml
 # We no Dirac here
