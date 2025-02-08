@@ -18,6 +18,7 @@ rm -rf $1/product/app/Chrome*
 rm -rf $1/product/app/Tycho
 rm -rf $1/product/app/GoogleContacts
 rm -rf $1/product/app/LocationHistoryPrebuilt
+rm -rf $1/product/app/DevicePolicyPrebuilt*
 rm -rf $1/product/app/YouTube
 rm -rf $1/product/app/YouTubeMusicPrebuilt
 rm -rf $1/product/app/PrebuiltGmail
