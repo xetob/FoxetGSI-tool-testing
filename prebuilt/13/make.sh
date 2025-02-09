@@ -10,7 +10,7 @@ thispath=`cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd`
 echo "ro.apex.updatable=true" >> $1/product/etc/build.prop
 
 # Copy system files
-rsync -ra $thispath/system/ $systempath
+sudo rsync -ra $thispath/system/ $systempath
 
 # Overlays
 if [ ! -d  $1/product ]; then
