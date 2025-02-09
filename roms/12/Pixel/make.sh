@@ -29,3 +29,12 @@ sed -i "/dataservice_app/d" $1/system_ext/etc/selinux/system_ext_seapp_contexts
 
 # Drop HbmSVManager which is crashing light hal
 rm -rf $1/system_ext/priv-app/HbmSVManager
+
+# Rewmove recovery and update pixel files selinux and other patch
+rm -rf $1/bin/update_engine
+rm -rf $1/bin/update_verifier
+rm -rf $1/etc/init/recovery-refresh.rc
+rm -rf $1/etc/init/update_verifier.rc
+rm -rf $1/etc/init/cppreopts.rc
+rm -rf $1/etc/init/otapreopt.rc
+rm -rf $1/product/etc/security/avb/system_other.avbpubkey
