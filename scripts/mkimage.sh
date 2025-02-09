@@ -71,51 +71,13 @@ if [[ -f "$tempdir/file_contexts" ]]; then
     echo "/cpefs                  u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
     echo "/modem                  u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
     echo "/module_hashes          u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/preload                u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/dpolicy                u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
     echo "/pds                    u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/fsg                    u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
     echo "/tombstones             u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/pixelworks             u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
     echo "/factory                u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/oneplus                u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
     echo "/oneplus(/.*)?          u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
     echo "/addon.d                u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
     echo "/op_odm                 u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
     echo "/avb                    u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/op_plat_sepolicy.cil   u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/avb/q-gsi.avbpubkey    u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/avb/r-gsi.avbpubkey    u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/avb/s-gsi.avbpubkey    u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/vgc                    u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/logdump                u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/ztecharger             u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_bigball             u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_stock               u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_region              u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_preload             u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_manifest            u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_heytap              u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_engineering         u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_company             u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_product             u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_carrier             u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_custom              u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/special_preload        u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_version             u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_bigball(/.*)?       u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_stock(/.*)?         u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_region(/.*)?        u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_preload(/.*)?       u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_manifest(/.*)?      u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_heytap(/.*)?        u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_engineering(/.*)?   u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_company(/.*)?       u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_product(/.*)?       u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_carrier(/.*)?       u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_custom(/.*)?        u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/special_preload(/.*)?  u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
-    echo "/my_version(/.*)?       u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
     fcontexts="$tempdir/file_contexts"
 fi
 sudo rm -rf "$systemdir/persist"
@@ -131,14 +93,14 @@ sudo mkdir -p "$systemdir/cache"
 
 if [ "$5" == "--old" ]; then
     if [ "$outputtype" == "Aonly" ]; then
-        sudo $make_ext4fs -T 0 -S $fcontexts -l $syssize -L system -a system -s "$output" "$systemdir/system"
+        sudo $make_ext4fs -T "1230768000" -I "256" -j "0" -S $fcontexts -l $syssize -L system -a system -s "$output" "$systemdir/system"
     else
-        sudo $make_ext4fs -T 0 -S $fcontexts -l $syssize -L / -a / -s "$output" "$systemdir/"
+        sudo $make_ext4fs -T "1230768000" -I "256" -j "0" -S $fcontexts -l $syssize -L / -a / -s "$output" "$systemdir/"
     fi
 else
     if [ "$outputtype" == "Aonly" ]; then
-        sudo $toolsdir/mkuserimg_mke2fs.sh -s "$systemdir/system" "$output" ext4 system $syssize -T 0 -L system $fcontexts
+        sudo $toolsdir/mkuserimg_mke2fs.py "$systemdir/system" "$output" ext4 "/system" $syssize $fcontexts -j "0" -T "1230768000" -L "system" -I "256" -M "/system" -m "0"
     else
-        sudo $toolsdir/mkuserimg_mke2fs.sh -s "$systemdir/" "$output" ext4 / $syssize -T 0 -L / $fcontexts
+        sudo $toolsdir/mkuserimg_mke2fs.py "$systemdir/" "$output" ext4 "/" $syssize $fcontexts -j "0" -T "1230768000" -L "/" -I "256" -M "/" -m "0"
     fi
 fi
