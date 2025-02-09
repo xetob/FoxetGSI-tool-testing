@@ -32,7 +32,7 @@ a11: Work ✅
 
 a12: Work ✅
 
-a13: Not tested yet ❌
+a13: 50/50 (may booted)
 
 a14: Not tested yet ❌
 
