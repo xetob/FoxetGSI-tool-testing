@@ -22,7 +22,6 @@ else
     cp -fpr $thispath/overlay/* $1/product/overlay/
 fi
 
-cat $thispath/rw-system.add.sh >> $1/bin/rw-system.sh
 echo "persist.bluetooth.bluetooth_audio_hal.disabled=true" >> $1/build.prop
 
 # Append file_context

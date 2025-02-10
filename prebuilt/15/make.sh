@@ -27,8 +27,6 @@ else
     cp -fpr $thispath/overlay/* $1/product/overlay/
 fi
 
-cat $thispath/rw-system.add.sh >> $1/bin/rw-system.sh
-
 # Append file_context
 cat $thispath/file_contexts >> $1/etc/selinux/plat_file_contexts
 
