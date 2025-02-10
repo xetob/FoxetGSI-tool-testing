@@ -1,4 +1,4 @@
-Ready-made gsi images: https://github.com/FoxetGSI/FoxetGSI-release
+Ready-made gsi images: https://t.me/FoxetGSI_updates
 
 # English
 
