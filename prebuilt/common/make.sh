@@ -7,24 +7,30 @@ thispath=`cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd`
 ## System edits
 # Copy system files
 rsync -ra $thispath/system/ $systempath
+
 # Remove libdolphin.so
+
 rm -rf $1/lib64/libdolphin.so
 # Drop caf permissions
 rm -rf $1/etc/permissions/qti_permissions.xml
 rm -rf $1/etc/permissions/com.qti.dpmframework.xml
 rm -rf $1/system_ext/etc/permissions/qti_permissions.xml
 rm -rf $1/system_ext/etc/permissions/com.qti.dpmframework.xml
+
 # We no Dirac here
 rm -rf $1/priv-app/DiracAudioControlService
 rm -rf $1/app/DiracManager
+
 # Drop qcom location
 rm -rf $1/priv-app/com.qualcomm.location
 
 ## SELinux
 # Append file_context
 cat $thispath/file_contexts >> $1/etc/selinux/plat_file_contexts
+
 # enable logcat
 sed -i "s/u:object_r:logcat_exec:s0/u:object_r:logd_exec:s0/g" $1/etc/selinux/plat_file_contexts
+
 # cleanup plat_property
 plat_property=$1/etc/selinux/plat_property_contexts
 sed -i "/ro.opengles.version/d" $plat_property
