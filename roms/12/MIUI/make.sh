@@ -34,3 +34,6 @@ sed -i "/miui.notch/d" $1/build.prop
 # Wifi fix
 cp -fpr $thispath/bin/* $1/bin/
 cat $thispath/rw-system.add.sh >> $1/bin/rw-system.sh
+
+# Remove old apex
+rm -rf $1/system_ext/apex/com.android.vndk*
