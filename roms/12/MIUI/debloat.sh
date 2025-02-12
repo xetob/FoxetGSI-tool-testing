@@ -67,7 +67,7 @@ rm -rf $1/product/priv-app/AppBox
 rm -rf $1/product/priv-app/AppCenter
 rm -rf $1/product/priv-app/GoogleAssistant
 rm -rf $1/product/priv-app/Velvet
-rm -rf $1/product/priv-app/MIUIMusicGlobal
+rm -rf $1/product/priv-app/MIUIMusic*
 
 rm -rf $1/product/data-app/Huanji
 rm -rf $1/product/data-app/MIDrive
@@ -76,9 +76,7 @@ rm -rf $1/product/data-app/MIDrop
 rm -rf $1/product/data-app/MiShop
 rm -rf $1/product/data-app/MiRadio
 rm -rf $1/product/data-app/MICOMMUNITY_OVERSEA
-rm -rf $1/product/data-app/MIGalleryLockscreen*
 rm -rf $1/product/data-app/MIMediaEditor*
-rm -rf $1/product/data-app/MIMediaEditor
 rm -rf $1/product/data-app/MiuiCompass
 rm -rf $1/product/data-app/MiuiScanner
 rm -rf $1/product/data-app/MIUINotes
