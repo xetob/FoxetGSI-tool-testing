@@ -25,15 +25,10 @@ rm -rf $1/app/FingerprintExtensionService
 # drop nfc
 rm -rf $1/app/NQNfcNci
 
-cat $thispath/rw-system.add.sh >> $1/bin/rw-system.sh
-
 sed -i 's/<bool name="support_round_corner">true/<bool name="support_round_corner">false/' $1/etc/device_features/*
 
 sed -i "/miui.notch/d" $1/build.prop
 
-# Wifi fix
-cp -fpr $thispath/bin/* $1/bin/
-cat $thispath/rw-system.add.sh >> $1/bin/rw-system.sh
-
 # Remove old apex
-rm -rf $1/system_ext/apex/com.android.vndk*
+rm -rf $1/system_ext/apex/com.android.vndk.v2*
+rm -rf $1/system_ext/apex/com.android.vndk.v3*
