@@ -11,5 +11,5 @@ if [[ -d "$TOOLS_DIR/Firmware_extractor" ]]; then
     git -C "$TOOLS_DIR"/Firmware_extractor reset --hard origin/master
 else
     echo Cloning Firmware_extractor 
-    git clone -q --recurse-submodules https://github.com/AndroidDumps/Firmware_extractor.git "$TOOLS_DIR"/Firmware_extractor
+    git clone -q --recurse-submodules https://github.com/FoxetGSI/Firmware_extractor.git "$TOOLS_DIR"/Firmware_extractor
 fi
