@@ -194,11 +194,14 @@ if [ "$outputtype" == "Aonly" ]; then
     sudo bash $romsdir/$sourcever/$romtype/makeA.sh "$systemdir/system" 2>/dev/null
 fi
 
-if [[ "$sourcever" == "9"  "$sourcever" == "10"  "$sourcever" == "11" ]]; then
-    sudo bash $prebuiltdir/common-old/make.sh "$systemdir/system" "$romsdir/$sourcever/$romtype" 2>/dev/null
-else
-    sudo bash $prebuiltdir/common/make.sh "$systemdir/system" "$romsdir/$sourcever/$romtype" 2>/dev/null
-fi
+case "$sourcever" in
+    9|10|11)
+        sudo bash $prebuiltdir/common-old/make.sh "$systemdir/system" "$romsdir/$sourcever/$romtype" 2>/dev/null
+        ;;
+    *)
+        sudo bash $prebuiltdir/common/make.sh "$systemdir/system" "$romsdir/$sourcever/$romtype" 2>/dev/null
+        ;;
+esac
 
 # Fixing environ
 if [ "$outputtype" == "Aonly" ]; then
