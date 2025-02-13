@@ -178,19 +178,26 @@ sudo bash $scriptsdir/nukeABstuffs.sh "$systemdir/system" 2>/dev/null
 sudo bash $prebuiltdir/vendor_vndk/make$sourcever.sh "$systemdir/system" 2>/dev/null
 sudo bash $prebuiltdir/$sourcever/make.sh "$systemdir/system" "$romsdir/$sourcever/$romtype" 2>/dev/null
 sudo bash $prebuiltdir/$sourcever/makeroot.sh "$systemdir" "$romsdir/$sourcever/$romtype" 2>/dev/null
-sudo bash $prebuiltdir/common/make.sh "$systemdir/system" "$romsdir/$sourcever/$romtype" 2>/dev/null
 sudo bash $romsdir/$sourcever/$romtype/make.sh "$systemdir/system" 2>/dev/null
 sudo bash $romsdir/$sourcever/$romtype/makeroot.sh "$systemdir" 2>/dev/null
 if [ ! "$romtype" == "$romtypename" ]; then
     sudo bash $romsdir/$sourcever/$romtype/$romtypename/make.sh "$systemdir/system" 2>/dev/null
     sudo bash $romsdir/$sourcever/$romtype/$romtypename/makeroot.sh "$systemdir" 2>/dev/null
 fi
+
 if [ "$outputtype" == "Aonly" ] && [ ! "$romtype" == "$romtypename" ]; then
     sudo bash $romsdir/$sourcever/$romtype/$romtypename/makeA.sh "$systemdir/system" 2>/dev/null
 fi
+
 if [ "$outputtype" == "Aonly" ]; then
     sudo bash $prebuiltdir/$sourcever/makeA.sh "$systemdir/system" 2>/dev/null
     sudo bash $romsdir/$sourcever/$romtype/makeA.sh "$systemdir/system" 2>/dev/null
+fi
+
+if [[ "$sourcever" == "9"  "$sourcever" == "10"  "$sourcever" == "11" ]]; then
+    sudo bash $prebuiltdir/common-old/make.sh "$systemdir/system" "$romsdir/$sourcever/$romtype" 2>/dev/null
+else
+    sudo bash $prebuiltdir/common/make.sh "$systemdir/system" "$romsdir/$sourcever/$romtype" 2>/dev/null
 fi
 
 # Fixing environ
