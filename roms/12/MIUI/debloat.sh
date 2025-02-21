@@ -45,35 +45,8 @@ rm -rf $1/priv-app/MIUIQuickSearchBox
 rm -rf $1/priv-app/MIUIVideo
 rm -rf $1/priv-app/MIUIYellowPage
 
-rm -rf $1/data-app/CleanMaster
-rm -rf $1/data-app/com.dragon.read_104
-rm -rf $1/data-app/com.ss.android.article.news_76
-rm -rf $1/data-app/Email
-rm -rf $1/data-app/MiDrive
-rm -rf $1/data-app/MIMediaEditor
-rm -rf $1/data-app/MIGalleryLockscreen
-rm -rf $1/data-app/MiShop
-rm -rf $1/data-app/MIUICalculator
-rm -rf $1/data-app/MIUICompass
-rm -rf $1/data-app/MIUIDriveMode
-rm -rf $1/data-app/MIUIDuokanReader
-rm -rf $1/data-app/MIUIGameCenter
-rm -rf $1/data-app/MiuiHealth
-rm -rf $1/data-app/MIUIHuanji
-rm -rf $1/data-app/MIUINewHome
-rm -rf $1/data-app/MIUINotes
-rm -rf $1/data-app/MiuiScanner
-rm -rf $1/data-app/MIUIVipAccount
-rm -rf $1/data-app/MIUISoundRecorderTargetSdk30
-rm -rf $1/data-app/MIUIVipAccount
-rm -rf $1/data-app/MIUIVirtualSim
-rm -rf $1/data-app/MIUIWeather
-rm -rf $1/data-app/MIUIXiaoAiSpeechEngine
-rm -rf $1/data-app/MIUIYoupin
-rm -rf $1/data-app/SmartHome
-rm -rf $1/data-app/ThirdAppAssistant
-rm -rf $1/data-app/wps-lite
-rm -rf $1/data-app/XMRemoteController
+rm -rf $1/data-app/*
+rm -rf $1/product/data-app/*
 
 rm -rf $1/product/app/aiasst_service
 rm -rf $1/product/app/talkback
