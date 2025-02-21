@@ -32,3 +32,6 @@ sed -i "/miui.notch/d" $1/build.prop
 # Remove old apex
 rm -rf $1/system_ext/apex/com.android.vndk.v2*
 rm -rf $1/system_ext/apex/com.android.vndk.v3*
+
+# Remove verity key
+rm -rf $1/../verity_key
