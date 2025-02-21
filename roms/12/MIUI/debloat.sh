@@ -77,3 +77,4 @@ rm -rf $1/data-app/XMRemoteController
 
 rm -rf $1/product/app/aiasst_service
 rm -rf $1/product/app/talkback
+rm -rf $1/product/priv-app/ConfigUpdater
