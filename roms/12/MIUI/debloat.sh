@@ -33,6 +33,18 @@ rm -rf $1/app/Updater
 rm -rf $1/app/VoiceAssist
 rm -rf $1/app/VoiceTrigger
 
+rm -rf $1/priv-app/MiGameCenterSDKService
+rm -rf $1/priv-app/MiBrowser
+rm -rf $1/priv-app/MirrorSmartHub2
+rm -rf $1/priv-app/MIService
+rm -rf $1/priv-app/MIShare
+rm -rf $1/priv-app/MIUICalendar
+rm -rf $1/priv-app/MIUIMusic
+rm -rf $1/priv-app/MIUIPersonalAssistant
+rm -rf $1/priv-app/MIUIQuickSearchBox
+rm -rf $1/priv-app/MIUIVideo
+rm -rf $1/priv-app/MIUIYellowPage
+
 rm -rf $1/data-app/CleanMaster
 rm -rf $1/data-app/com.dragon.read_104
 rm -rf $1/data-app/com.ss.android.article.news_76
