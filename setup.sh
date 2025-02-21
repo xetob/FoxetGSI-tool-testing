@@ -13,4 +13,4 @@ sudo apt update
 sudo apt install unace unrar zip unzip p7zip-full p7zip-rar sharutils rar uudeview mpack arj cabextract file-roller device-tree-compiler liblzma-dev python3-pip python-is-python3 brotli liblz4-tool gawk aria2 default-jre erofs-utils -y
 
 # Install Python packages
-install_with_fallback "backports.lzma bsdiff4 zstandard protobuf pycryptodome"
+install_with_fallback "backports.lzma bsdiff4 zstandard protobuf pycryptodome brotli"
