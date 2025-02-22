@@ -173,33 +173,34 @@ fi
 
 # Start patching
 echo "Patching started..."
-sudo bash $scriptsdir/fixsymlinks.sh "$systemdir/system" 2>/dev/null
-sudo bash $scriptsdir/nukeABstuffs.sh "$systemdir/system" 2>/dev/null
-sudo bash $prebuiltdir/vendor_vndk/make$sourcever.sh "$systemdir/system" 2>/dev/null
-sudo bash $prebuiltdir/$sourcever/make.sh "$systemdir/system" "$romsdir/$sourcever/$romtype" 2>/dev/null
-sudo bash $prebuiltdir/$sourcever/makeroot.sh "$systemdir" "$romsdir/$sourcever/$romtype" 2>/dev/null
-sudo bash $romsdir/$sourcever/$romtype/make.sh "$systemdir/system" 2>/dev/null
-sudo bash $romsdir/$sourcever/$romtype/makeroot.sh "$systemdir" 2>/dev/null
+$scriptsdir/fixsymlinks.sh "$systemdir/system" 2>/dev/null
+$scriptsdir/nukeABstuffs.sh "$systemdir/system" 2>/dev/null
+$scriptsdir/dirtolink.sh "$systemdir/system"
+$prebuiltdir/vendor_vndk/make$sourcever.sh "$systemdir/system" 2>/dev/null
+$prebuiltdir/$sourcever/make.sh "$systemdir/system" "$romsdir/$sourcever/$romtype" 2>/dev/null
+$prebuiltdir/$sourcever/makeroot.sh "$systemdir" "$romsdir/$sourcever/$romtype" 2>/dev/null
+$romsdir/$sourcever/$romtype/make.sh "$systemdir/system" 2>/dev/null
+$romsdir/$sourcever/$romtype/makeroot.sh "$systemdir" 2>/dev/null
 if [ ! "$romtype" == "$romtypename" ]; then
-    sudo bash $romsdir/$sourcever/$romtype/$romtypename/make.sh "$systemdir/system" 2>/dev/null
-    sudo bash $romsdir/$sourcever/$romtype/$romtypename/makeroot.sh "$systemdir" 2>/dev/null
+    $romsdir/$sourcever/$romtype/$romtypename/make.sh "$systemdir/system" 2>/dev/null
+    $romsdir/$sourcever/$romtype/$romtypename/makeroot.sh "$systemdir" 2>/dev/null
 fi
 
 if [ "$outputtype" == "Aonly" ] && [ ! "$romtype" == "$romtypename" ]; then
-    sudo bash $romsdir/$sourcever/$romtype/$romtypename/makeA.sh "$systemdir/system" 2>/dev/null
+    $romsdir/$sourcever/$romtype/$romtypename/makeA.sh "$systemdir/system" 2>/dev/null
 fi
 
 if [ "$outputtype" == "Aonly" ]; then
-    sudo bash $prebuiltdir/$sourcever/makeA.sh "$systemdir/system" 2>/dev/null
-    sudo bash $romsdir/$sourcever/$romtype/makeA.sh "$systemdir/system" 2>/dev/null
+    $prebuiltdir/$sourcever/makeA.sh "$systemdir/system" 2>/dev/null
+    $romsdir/$sourcever/$romtype/makeA.sh "$systemdir/system" 2>/dev/null
 fi
 
 case "$sourcever" in
     9|10|11)
-        sudo bash $prebuiltdir/common-old/make.sh "$systemdir/system" "$romsdir/$sourcever/$romtype" 2>/dev/null
+        $prebuiltdir/common-old/make.sh "$systemdir/system" "$romsdir/$sourcever/$romtype" 2>/dev/null
         ;;
     *)
-        sudo bash $prebuiltdir/common/make.sh "$systemdir/system" "$romsdir/$sourcever/$romtype" 2>/dev/null
+        $prebuiltdir/common/make.sh "$systemdir/system" "$romsdir/$sourcever/$romtype" 2>/dev/null
         ;;
 esac
 
@@ -260,8 +261,4 @@ echo "Creating Image: $outputimagename"
 if [ "$sourcever" == "9" ]; then
     useold="--old"
 fi
-sudo bash $scriptsdir/mkimage.sh $systemdir $outputtype $systemsize $output $useold > $tempdir/mkimage.log
-
-rm -rf "$tempdir"
-echo "Temp dir removed."
-
+$scriptsdir/mkimage.sh $systemdir $outputtype $systemsize $output $useold > $tempdir/mkimage.log
