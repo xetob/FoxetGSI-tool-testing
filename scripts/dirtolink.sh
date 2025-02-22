@@ -10,8 +10,7 @@ is_directory_empty() {
 
 if [ -e "$1/../product" ] || [ -L "$1/../product" ]; then
     if [ -d "$1/../product" ] && ! is_directory_empty "$1/../product"; then
-        mv "$1/../product"/* "$1"/ 2>/dev/null
-        mv "$1/../product"/.[!.]* "$1"/ 2>/dev/null
+        mv "$1/../product" "$1" 2>/dev/null
     fi
     rm -rf "$1/../product"
     ln -s /system/product "$1/../product"
@@ -19,8 +18,7 @@ fi
 
 if [ -e "$1/../system_ext" ] || [ -L "$1/../system_ext" ]; then
     if [ -d "$1/../system_ext" ] && ! is_directory_empty "$1/../system_ext"; then
-        mv "$1/../system_ext"/* "$1"/ 2>/dev/null
-        mv "$1/../system_ext"/.[!.]* "$1"/ 2>/dev/null
+        mv "$1/../system_ext" "$1" 2>/dev/null
     fi
     rm -rf "$1/../system_ext"
     ln -s /system/system_ext "$1/../system_ext"
