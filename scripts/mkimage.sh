@@ -98,6 +98,9 @@ if [[ -f "$tempdir/file_contexts" ]]; then
     echo "/my_custom(/.*)?        u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
     echo "/special_preload(/.*)?  u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
     echo "/my_version(/.*)?       u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
+    echo "/mi_ext(/.*)?       u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
+    echo "/opconfig(/.*)?       u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
+    echo "/opcust(/.*)?       u:object_r:rootfs:s0" >> "$tempdir/file_contexts"
     fcontexts="$tempdir/file_contexts"
 fi
 sudo rm -rf "$systemdir/persist"
