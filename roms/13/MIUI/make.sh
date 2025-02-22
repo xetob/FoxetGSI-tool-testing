@@ -3,9 +3,6 @@
 systempath=$1
 thispath=`cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd`
 
-# build.prop
-#echo "ro.bluetooth.library_name=libbluetooth_qti.so" >> $1/build.prop
-
 # drop finddevice, needs to be done before copying system files
 rm -rf $1/priv-app/FindDevice
 
@@ -32,3 +29,7 @@ sed -i "/miui.notch/d" $1/build.prop
 # Remove old apex
 rm -rf $1/system_ext/apex/com.android.vndk.v2*
 rm -rf $1/system_ext/apex/com.android.vndk.v3*
+
+# drop verity key
+rm -rf $1/../verity_key
+rm -rf $1/../init.recovery.hardware.rc
